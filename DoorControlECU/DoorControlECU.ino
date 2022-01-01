@@ -173,28 +173,22 @@ void loop() {
 
 	#ifdef testMode
 		#ifdef lightTestMode
-      digitalWrite(interiorLightsPin, HIGH);
-      Serial.println("Interior Light On);
-      delay(4000);
-      digitalWrite(interiorLightsPin, LOW);
-      Serial.println("Interior Light Off);
-      delay(4000);
+      lightsTest();
 		#endif
 		#ifdef windowTestMode
+      windowButtonsTest();
 		#endif
 		#ifdef doorTestMode
+      doorButtonsTest();
 		#endif
 		#ifdef bootTestMode
+      bootButtonTest();
 		#endif
 		#ifdef speedTestMode
-			int roadSpeed = analogRead(roadSpeedPin);
-			Serial.println("Road speed: " + roadSpeed);
-			delay(1000);
+			speedTest();
 		#endif
 		#ifdef alarmTestMode
-			int alarm = digitalRead(alarmInputPin);
-			Serial.println("Alarm state: " + alarmInputPin);
-			delay(1000);
+			alarmTest();
 		#endif
 	#else
 		//check alarm state
@@ -355,4 +349,57 @@ void passengerUnlockDoor() {
 
 void passengerUnlatchDoor() {
 
+}
+
+void doorButtonsTest() {
+    int reading;
+    bool driverExternalButtonChanged = false;
+    reading = digitalRead(driverExternalDoorButtonPin);
+    driverExternalButtonChanged = debounceButton(reading,
+            driverExternalDoorButtonState,
+            driverExternalDoorLastButtonState,
+            lastDriverExternalDoorButtonDebounceTime);
+    if (driverExternalButtonChanged) {
+      driverExternalDoorButtonState = !(driverExternalDoorButtonState);
+      Serial.println("Drivers external door button: " + driverExternalDoorButtonState);
+    }
+
+    bool driverInternalButtonChanged = false;
+    reading = digitalRead(driverInternalDoorButtonPin);
+    driverInternalButtonChanged = debounceButton(reading,
+            driverInternalDoorButtonState,
+            driverInternalDoorLastButtonState,
+            lastDriverInternalDoorButtonDebounceTime);
+    if (driverInternalButtonChanged) {
+      driverInternalDoorButtonState = !(driverInternalDoorButtonState);
+      Serial.println("Driver internal door button: " + driverInternalDoorButtonState);
+    }
+}
+
+void windowButtonsTest() {
+}
+
+void lightsTest() {
+      digitalWrite(interiorLightsPin, HIGH);
+      Serial.println("Interior Light On");
+      delay(4000);
+      digitalWrite(interiorLightsPin, LOW);
+      Serial.println("Interior Light Off");
+      delay(4000);
+}
+
+void speedTest() {
+      int roadSpeed = analogRead(roadSpeedPin);
+      Serial.println("Road speed: " + roadSpeed);
+      delay(1000);
+}
+
+void alarmTest() {
+      int alarm = digitalRead(alarmInputPin);
+      Serial.println("Alarm state: " + alarmInputPin);
+      delay(1000);
+}
+
+void bootButtonTest() {
+  
 }
