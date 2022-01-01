@@ -23,38 +23,38 @@
 
 /* Relay outputs */
 
-const int driverWindowDownPin = 9; // the pin numbers for the Window Down relay
-const int driverWindowUpPin = 10; // the pin numbers for the Window Up relay
-const int driverDoorLatchPin = 11; // the pin numbers for the Door Latch relay
-const int driverDoorLockPin = 12; // the pin numbers for the Door Lock relay
+const int driverWindowDownPin = 2; // the pin numbers for the Window Down relay
+const int driverWindowUpPin = 3; // the pin numbers for the Window Up relay
+const int driverDoorLatchPin = 4; // the pin numbers for the Door Latch relay
+const int driverDoorLockPin = 5; // the pin numbers for the Door Lock relay
 
-const int passengerWindowDownPin = 13; // the pin numbers for the Window Down relay
-const int passengerWindowUpPin = 14; // the pin numbers for the Window Up relay
-const int passengerDoorLatchPin = 15; // the pin numbers for the Door Latch relay
-const int passengerDoorLockPin = 16; // the pin numbers for the Door Lock relay
+const int passengerWindowDownPin = 6; // the pin numbers for the Window Down relay
+const int passengerWindowUpPin = 7; // the pin numbers for the Window Up relay
+const int passengerDoorLatchPin = 8; // the pin numbers for the Door Latch relay
+const int passengerDoorLockPin = 9; // the pin numbers for the Door Lock relay
 
-const int bootLatchPin = 17; // the pin numbers for the Boot Latch relay
-const int bootLockPin = 18; // the pin numbers for the Boot Lock relay
+const int bootLatchPin = 10; // the pin numbers for the Boot Latch relay
+const int bootLockPin = 11; // the pin numbers for the Boot Lock relay
 
-const int interiorLightsPin = 19; // the pin numbers for the Interior Lights relay
+const int interiorLightsPin = 12; // the pin numbers for the Interior Lights relay
 
 /* Digital inputs */
 
-const int driverExternalDoorButtonPin =  20; // the pin numbers for the External Door button
-const int driverInternalDoorButtonPin =  21; // the pin numbers for the Internal Door button
-const int driverWindowDownButtonPin = 22; // the pin numbers for the Window Down button
-const int driverWindowUpButtonPin = 23; // the pin numbers for the Window Up button
-const int driverPinSwitch = 24; // the pin number for the door open / closed switch
+const int driverExternalDoorButtonPin =  13; // the pin numbers for the External Door button
+const int driverInternalDoorButtonPin =  14; // the pin numbers for the Internal Door button
+const int driverWindowDownButtonPin = 15; // the pin numbers for the Window Down button
+const int driverWindowUpButtonPin = 16; // the pin numbers for the Window Up button
+const int driverPinSwitch = 17; // the pin number for the door open / closed switch
 
-const int passengerExternalDoorButtonPin =  25; // the pin numbers for the External Door button
-const int passengerInternalDoorButtonPin =  26; // the pin numbers for the Internal Door button
-const int passengerWindowDownButtonPin = 27; // the pin numbers for the Window Down button
-const int passengerWindowUpButtonPin = 28; // the pin numbers for the Window Up button
-const int passengerPinSwitch = 29; // the pin number for the door open / closed switch
+const int passengerExternalDoorButtonPin =  18; // the pin numbers for the External Door button
+const int passengerInternalDoorButtonPin =  19; // the pin numbers for the Internal Door button
+const int passengerWindowDownButtonPin = 20; // the pin numbers for the Window Down button
+const int passengerWindowUpButtonPin = 21; // the pin numbers for the Window Up button
+const int passengerPinSwitch = 22; // the pin number for the door open / closed switch
 
-const int bootOpenButtonPin = 30; // the pin number for the Boot Open button
+const int bootOpenButtonPin = 23; // the pin number for the Boot Open button
 
-const int alarmInputPin = 31; // the pin number for the alarm input
+const int alarmInputPin = 24; // the pin number for the alarm input
 
 /* Analogue inputs */
 
@@ -137,19 +137,27 @@ void setup() {
 	Serial.begin(9600);
 
 	/* relay outputs */
-	pinMode(windowDownPin, OUTPUT); // initialize pin 13 [Window Down] as an output
-	pinMode(windowUpPin, OUTPUT); // initialize pin 14 [Window Up] as an output
-	pinMode(doorLatchPin, OUTPUT); // initialize pin 15 [Door Latch] as an output
-	pinMode(doorLockPin, OUTPUT); // initialize pin 16 [Door Lock] as an output
-	pinMode(bootLatchPin, OUTPUT); // initialize pin 17 [Boot Latch] as an output
+	pinMode(driverWindowDownPin, OUTPUT); // initialize pin 13 [Window Down] as an output
+	pinMode(driverWindowUpPin, OUTPUT); // initialize pin 14 [Window Up] as an output
+	pinMode(driverDoorLatchPin, OUTPUT); // initialize pin 15 [Door Latch] as an output
+	pinMode(driverDoorLockPin, OUTPUT); // initialize pin 16 [Door Lock] as an output
+	pinMode(passengerWindowDownPin, OUTPUT); // initialize pin 13 [Window Down] as an output
+  pinMode(passengerWindowUpPin, OUTPUT); // initialize pin 14 [Window Up] as an output
+  pinMode(passengerDoorLatchPin, OUTPUT); // initialize pin 15 [Door Latch] as an output
+  pinMode(passengerDoorLockPin, OUTPUT); // initialize pin 16 [Door Lock] as an output
+  pinMode(bootLatchPin, OUTPUT); // initialize pin 17 [Boot Latch] as an output
 	pinMode(bootLockPin, OUTPUT); // initialize pin 18 [Boot Lock] as an output
 	pinMode(interiorLightsPin, OUTPUT);
 
 	/* switch inputs */
-	pinMode(externalDoorButtonPin, INPUT_PULLUP); // initialize pin 20 [Outdoor door button] as an input
-	pinMode(internalDoorButtonPin, INPUT_PULLUP); // initialize pin 21 [Indoor door button] as an input
-	pinMode(windowDownButtonPin, INPUT_PULLUP); // initialize pin 22 [Window Down button] as an input
-	pinMode(windowUpButtonPin, INPUT_PULLUP); // initialize pin 23 [Window Up button] as an input
+	pinMode(driverExternalDoorButtonPin, INPUT_PULLUP); // initialize pin 20 [Outdoor door button] as an input
+	pinMode(driverInternalDoorButtonPin, INPUT_PULLUP); // initialize pin 21 [Indoor door button] as an input
+	pinMode(driverWindowDownButtonPin, INPUT_PULLUP); // initialize pin 22 [Window Down button] as an input
+	pinMode(driverWindowUpButtonPin, INPUT_PULLUP); // initialize pin 23 [Window Up button] as an input
+  pinMode(passengerExternalDoorButtonPin, INPUT_PULLUP); // initialize pin 20 [Outdoor door button] as an input
+  pinMode(passengerInternalDoorButtonPin, INPUT_PULLUP); // initialize pin 21 [Indoor door button] as an input
+  pinMode(passengerWindowDownButtonPin, INPUT_PULLUP); // initialize pin 22 [Window Down button] as an input
+  pinMode(passengerWindowUpButtonPin, INPUT_PULLUP); // initialize pin 23 [Window Up button] as an input
 	pinMode(bootOpenButtonPin, INPUT_PULLUP); // initialize pin 24 [Boot Open button] as an input
 
 	/* external data */
@@ -163,21 +171,27 @@ void setup() {
 
 void loop() {
 
-	#if testMode
-		#if lightTestMode
+	#ifdef testMode
+		#ifdef lightTestMode
+      digitalWrite(interiorLightsPin, HIGH);
+      Serial.println("Interior Light On);
+      delay(4000);
+      digitalWrite(interiorLightsPin, LOW);
+      Serial.println("Interior Light Off);
+      delay(4000);
 		#endif
-		#if windowTestMode
+		#ifdef windowTestMode
 		#endif
-		#if doorTestMode
+		#ifdef doorTestMode
 		#endif
-		#if bootTestMode
+		#ifdef bootTestMode
 		#endif
-		#if speedTestMode
+		#ifdef speedTestMode
 			int roadSpeed = analogRead(roadSpeedPin);
 			Serial.println("Road speed: " + roadSpeed);
 			delay(1000);
 		#endif
-		#if alarmTestMode
+		#ifdef alarmTestMode
 			int alarm = digitalRead(alarmInputPin);
 			Serial.println("Alarm state: " + alarmInputPin);
 			delay(1000);
@@ -185,8 +199,10 @@ void loop() {
 	#else
 		//check alarm state
 		updateAlarmState();
-		readDoorButtons();
-		readWindowButtons();
+		readDriverDoorButtons();
+		readDriverWindowButtons();
+		readPassengerDoorButtons();
+		readPassengerWindowButtons();
 		readBootButton();
 
 	#endif
@@ -196,28 +212,68 @@ void loop() {
  * Functions
  */
 
-void updateAlarmState() {
-	if(digitalRead(alarmInputPin) == HIGH) {
-		alarmed = true;
+bool debounceButton(int reading,
+					int buttonState,
+					int lastButtonState = LOW,
+					unsigned long lastDebounceTime = 0,
+					unsigned long debounceDelay = 50) {
+
+	// check to see if you just pressed the button
+	// (i.e. the input went from LOW to HIGH), and you've waited long enough
+	// since the last press to ignore any noise:
+
+	// If the switch changed, due to noise or pressing:
+	if (reading != lastButtonState) {
+		// reset the debouncing timer
+		lastDebounceTime = millis();
+	}
+
+	if ((millis() - lastDebounceTime) > debounceDelay) {
+		// whatever the reading is at, it's been there for longer than the debounce
+		// delay, so take it as the actual current state:
+
+		// if the button state has changed:
+		if (reading != buttonState) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
-void updateButtonState() {
-		if((digitalRead(driverExternalDoorButtonPin) == LOW) || (digitalRead(driverInternalDoorButtonPin) == LOW)) {
-			driverButtonPressed = true;
-		} else {
-			driverButtonPressed = false;
-		}
-		if((digitalRead(passengerExternalDoorButtonPin) == LOW) || (digitalRead(passengerInternalDoorButtonPin) == LOW)) {
-			passengerButtonPressed = true;
-		} else {
-			passengerButtonPressed = false;
-		}
+void updateAlarmState() {
+	if(digitalRead(alarmInputPin) == HIGH) {
+		alarmed = true;
+	} else {
+		alarmed = false;
+	}
 }
 
-void readDoorButtons() {
+void readDriverDoorButtons() {
 	if (!alarmed) {
-		if(driverButtonPressed && !driverOpeningDoor) {
+		int reading;
+
+		bool driverExternalButtonChanged = false;
+		reading = digitalRead(driverExternalDoorButtonPin);
+		driverExternalButtonChanged = debounceButton(reading,
+		        driverExternalDoorButtonState,
+		        driverExternalDoorLastButtonState,
+		        lastDriverExternalDoorButtonDebounceTime);
+		if (driverExternalButtonChanged) {
+			driverExternalDoorButtonState = !(driverExternalDoorButtonState);
+		}
+
+		bool driverInternalButtonChanged = false;
+		reading = digitalRead(driverInternalDoorButtonPin);
+		driverInternalButtonChanged = debounceButton(reading,
+						driverInternalDoorButtonState,
+						driverInternalDoorLastButtonState,
+						lastDriverInternalDoorButtonDebounceTime);
+		if (driverInternalButtonChanged) {
+			driverInternalDoorButtonState = !(driverInternalDoorButtonState);
+		}
+
+		if (driverExternalButtonChanged || driverInternalButtonChanged) {
 			driverOpeningDoor = true;
 			turnOnLights();
 			driverDropWindow();
@@ -228,6 +284,47 @@ void readDoorButtons() {
 	}
 }
 
+void readDriverWindowButtons() {
+}
+
+void readPassengerDoorButtons() {
+	if (!alarmed) {
+		int reading;
+
+		bool passengerExternalButtonChanged = false;
+		reading = digitalRead(passengerExternalDoorButtonPin);
+		passengerExternalButtonChanged = debounceButton(reading,
+						passengerExternalDoorButtonState,
+						passengerExternalDoorLastButtonState,
+						lastPassengerExternalDoorButtonDebounceTime);
+		if (passengerExternalButtonChanged) {
+			passengerExternalDoorButtonState = !(passengerExternalDoorButtonState);
+		}
+
+		bool passengerInternalButtonChanged = false;
+		reading = digitalRead(passengerInternalDoorButtonPin);
+		passengerInternalButtonChanged = debounceButton(reading,
+						passengerInternalDoorButtonState,
+						passengerInternalDoorLastButtonState,
+						lastPassengerInternalDoorButtonDebounceTime);
+		if (passengerInternalButtonChanged) {
+			passengerInternalDoorButtonState = !(passengerInternalDoorButtonState);
+		}
+
+		if (passengerExternalButtonChanged || passengerInternalButtonChanged) {
+			passengerOpeningDoor = true;
+			turnOnLights();
+			passengerDropWindow();
+			passengerUnlockDoor();
+			passengerUnlatchDoor();
+			passengerOpeningDoor = false;
+		}
+	}
+}
+
+void readPassengerWindowButtons() {
+}
+
 void turnOnLights() {
 		digitalWrite(interiorLightsPin, HIGH);
 }
@@ -236,14 +333,26 @@ void turnOffLights() {
 		digitalWrite(interiorLightsPin, LOW);
 }
 
-void dropWindow() {
+void driverDropWindow() {
 
 }
 
-void unlockDoor() {
+void driverUnlockDoor() {
 
 }
 
-void unlatchDoor() {
+void driverUnlatchDoor() {
+
+}
+
+void passengerDropWindow() {
+
+}
+
+void passengerUnlockDoor() {
+
+}
+
+void passengerUnlatchDoor() {
 
 }
