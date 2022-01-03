@@ -116,6 +116,9 @@ int passengerWindowDownLastButtonState = HIGH;
 int passengerWindowUpButtonState;
 int passengerWindowUpLastButtonState = HIGH;
 
+int bootOpenButtonState;
+int bootOpenLastButtonState = HIGH;
+
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
 unsigned long lastDriverExternalDoorButtonDebounceTime = 0;  // the last time the output pin was toggled
@@ -126,6 +129,7 @@ unsigned long lastPassengerExternalDoorButtonDebounceTime = 0;  // the last time
 unsigned long lastPassengerInternalDoorButtonDebounceTime = 0;  // the last time the output pin was toggled
 unsigned long lastPassengerWindowDownButtonDebounceTime = 0;  // the last time the output pin was toggled
 unsigned long lastPassengerWindowUpButtonDebounceTime = 0;  // the last time the output pin was toggled
+unsigned long bootOpenButtonDebounceTime = 0;  // the last time the output pin was toggled
 unsigned long debounceDelay = 50;    // the debounce time; increase if the output flickers
 
 /*
@@ -142,10 +146,10 @@ void setup() {
 	pinMode(driverDoorLatchPin, OUTPUT); // initialize pin 15 [Door Latch] as an output
 	pinMode(driverDoorLockPin, OUTPUT); // initialize pin 16 [Door Lock] as an output
 	pinMode(passengerWindowDownPin, OUTPUT); // initialize pin 13 [Window Down] as an output
-  pinMode(passengerWindowUpPin, OUTPUT); // initialize pin 14 [Window Up] as an output
-  pinMode(passengerDoorLatchPin, OUTPUT); // initialize pin 15 [Door Latch] as an output
-  pinMode(passengerDoorLockPin, OUTPUT); // initialize pin 16 [Door Lock] as an output
-  pinMode(bootLatchPin, OUTPUT); // initialize pin 17 [Boot Latch] as an output
+	pinMode(passengerWindowUpPin, OUTPUT); // initialize pin 14 [Window Up] as an output
+ 	pinMode(passengerDoorLatchPin, OUTPUT); // initialize pin 15 [Door Latch] as an output
+ 	pinMode(passengerDoorLockPin, OUTPUT); // initialize pin 16 [Door Lock] as an output
+ 	pinMode(bootLatchPin, OUTPUT); // initialize pin 17 [Boot Latch] as an output
 	pinMode(bootLockPin, OUTPUT); // initialize pin 18 [Boot Lock] as an output
 	pinMode(interiorLightsPin, OUTPUT);
 
@@ -154,10 +158,10 @@ void setup() {
 	pinMode(driverInternalDoorButtonPin, INPUT_PULLUP); // initialize pin 21 [Indoor door button] as an input
 	pinMode(driverWindowDownButtonPin, INPUT_PULLUP); // initialize pin 22 [Window Down button] as an input
 	pinMode(driverWindowUpButtonPin, INPUT_PULLUP); // initialize pin 23 [Window Up button] as an input
-  pinMode(passengerExternalDoorButtonPin, INPUT_PULLUP); // initialize pin 20 [Outdoor door button] as an input
-  pinMode(passengerInternalDoorButtonPin, INPUT_PULLUP); // initialize pin 21 [Indoor door button] as an input
-  pinMode(passengerWindowDownButtonPin, INPUT_PULLUP); // initialize pin 22 [Window Down button] as an input
-  pinMode(passengerWindowUpButtonPin, INPUT_PULLUP); // initialize pin 23 [Window Up button] as an input
+ 	pinMode(passengerExternalDoorButtonPin, INPUT_PULLUP); // initialize pin 20 [Outdoor door button] as an input
+ 	pinMode(passengerInternalDoorButtonPin, INPUT_PULLUP); // initialize pin 21 [Indoor door button] as an input
+ 	pinMode(passengerWindowDownButtonPin, INPUT_PULLUP); // initialize pin 22 [Window Down button] as an input
+ 	pinMode(passengerWindowUpButtonPin, INPUT_PULLUP); // initialize pin 23 [Window Up button] as an input
 	pinMode(bootOpenButtonPin, INPUT_PULLUP); // initialize pin 24 [Boot Open button] as an input
 
 	/* external data */
@@ -380,26 +384,36 @@ void windowButtonsTest() {
 }
 
 void lightsTest() {
-      digitalWrite(interiorLightsPin, HIGH);
-      Serial.println("Interior Light On");
-      delay(4000);
-      digitalWrite(interiorLightsPin, LOW);
-      Serial.println("Interior Light Off");
-      delay(4000);
+    digitalWrite(interiorLightsPin, HIGH);
+    Serial.println("Interior Light On");
+    delay(4000);
+    digitalWrite(interiorLightsPin, LOW);
+    Serial.println("Interior Light Off");
+    delay(4000);
 }
 
 void speedTest() {
-      int roadSpeed = analogRead(roadSpeedPin);
-      Serial.println("Road speed: " + roadSpeed);
-      delay(1000);
+    int roadSpeed = analogRead(roadSpeedPin);
+    Serial.println("Road speed: " + roadSpeed);
+    delay(1000);
 }
 
 void alarmTest() {
-      int alarm = digitalRead(alarmInputPin);
-      Serial.println("Alarm state: " + alarmInputPin);
-      delay(1000);
+    int alarm = digitalRead(alarmInputPin);
+    Serial.println("Alarm state: " + alarmInputPin);
+    delay(1000);
 }
 
 void bootButtonTest() {
-  
+    int reading;
+    bool bootOpenButtonChanged = false;
+    reading = digitalRead(bootOpenButtonPin);
+    bootOpenButtonChanged = debounceButton(reading,
+            bootOpenButtonState,
+            bootOpenLastButtonState,
+            bootOpenButtonDebounceTime);
+    if (bootOpenButtonChanged) {
+      bootOpenLastButtonState = !(bootOpenLastButtonState);
+      Serial.println("Boot open button: " + bootOpenLastButtonState);
+    }
 }
