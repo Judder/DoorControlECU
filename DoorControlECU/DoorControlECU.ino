@@ -10,9 +10,9 @@
  */
 
 #define testMode
-#define lightTestMode
+//#define lightTestMode
 //#define windowTestMode
-//#define doorTestMode
+#define doorTestMode
 //#define bootTestMode
 //#define speedTestMode
 //#define alarmTestMode
@@ -23,38 +23,38 @@
 
 /* Relay outputs */
 
-const int driverWindowDownPin = 2; // the pin numbers for the Window Down relay
-const int driverWindowUpPin = 3; // the pin numbers for the Window Up relay
-const int driverDoorLatchPin = 4; // the pin numbers for the Door Latch relay
-const int driverDoorLockPin = 5; // the pin numbers for the Door Lock relay
+const int driverWindowDownPin = 4; // the pin numbers for the Window Down relay
+const int driverWindowUpPin = 5; // the pin numbers for the Window Up relay
+const int driverDoorLatchPin = 6; // the pin numbers for the Door Latch relay
+const int driverDoorLockPin = 7; // the pin numbers for the Door Lock relay
 
-const int passengerWindowDownPin = 6; // the pin numbers for the Window Down relay
-const int passengerWindowUpPin = 7; // the pin numbers for the Window Up relay
-const int passengerDoorLatchPin = 8; // the pin numbers for the Door Latch relay
-const int passengerDoorLockPin = 9; // the pin numbers for the Door Lock relay
+const int passengerWindowDownPin = 8; // the pin numbers for the Window Down relay
+const int passengerWindowUpPin = 9; // the pin numbers for the Window Up relay
+const int passengerDoorLatchPin = 10; // the pin numbers for the Door Latch relay
+const int passengerDoorLockPin = 11; // the pin numbers for the Door Lock relay
 
-const int bootLatchPin = 10; // the pin numbers for the Boot Latch relay
-const int bootLockPin = 11; // the pin numbers for the Boot Lock relay
+const int bootLatchPin = 12; // the pin numbers for the Boot Latch relay
+const int bootLockPin = 13; // the pin numbers for the Boot Lock relay
 
-const int interiorLightsPin = 12; // the pin numbers for the Interior Lights relay
+const int interiorLightsPin = 14; // the pin numbers for the Interior Lights relay
 
 /* Digital inputs */
 
-const int driverExternalDoorButtonPin =  13; // the pin numbers for the External Door button
-const int driverInternalDoorButtonPin =  14; // the pin numbers for the Internal Door button
-const int driverWindowDownButtonPin = 15; // the pin numbers for the Window Down button
-const int driverWindowUpButtonPin = 16; // the pin numbers for the Window Up button
-const int driverPinSwitch = 17; // the pin number for the door open / closed switch
+const int driverExternalDoorButtonPin =  15; // the pin numbers for the External Door button
+const int driverInternalDoorButtonPin =  16; // the pin numbers for the Internal Door button
+const int driverWindowDownButtonPin = 17; // the pin numbers for the Window Down button
+const int driverWindowUpButtonPin = 18; // the pin numbers for the Window Up button
+const int driverPinSwitch = 19; // the pin number for the door open / closed switch
 
-const int passengerExternalDoorButtonPin =  18; // the pin numbers for the External Door button
-const int passengerInternalDoorButtonPin =  19; // the pin numbers for the Internal Door button
-const int passengerWindowDownButtonPin = 20; // the pin numbers for the Window Down button
-const int passengerWindowUpButtonPin = 21; // the pin numbers for the Window Up button
-const int passengerPinSwitch = 22; // the pin number for the door open / closed switch
+const int passengerExternalDoorButtonPin =  20; // the pin numbers for the External Door button
+const int passengerInternalDoorButtonPin =  21; // the pin numbers for the Internal Door button
+const int passengerWindowDownButtonPin = 22; // the pin numbers for the Window Down button
+const int passengerWindowUpButtonPin = 23; // the pin numbers for the Window Up button
+const int passengerPinSwitch = 24; // the pin number for the door open / closed switch
 
-const int bootOpenButtonPin = 23; // the pin number for the Boot Open button
+const int bootOpenButtonPin = 25; // the pin number for the Boot Open button
 
-const int alarmInputPin = 24; // the pin number for the alarm input
+const int alarmInputPin = 26; // the pin number for the alarm input
 
 /* Analogue inputs */
 
@@ -183,7 +183,8 @@ void loop() {
       windowButtonsTest();
 		#endif
 		#ifdef doorTestMode
-      doorButtonsTest();
+      //doorButtonsTest();
+	    driverDoorOpenTest();
 		#endif
 		#ifdef bootTestMode
       bootButtonTest();
@@ -332,15 +333,30 @@ void turnOffLights() {
 }
 
 void driverDropWindow() {
-
+	digitalWrite(driverWindowDownPin,HIGH);
+	delay(2000);
+	digitalWrite(driverWindowDownPin,LOW);
 }
 
 void driverUnlockDoor() {
-
+	digitalWrite(driverDoorLockPin, HIGH);
 }
 
 void driverUnlatchDoor() {
+	for (int i = 0; i < 4; i++) {
+		digitalWrite(driverDoorLatchPin, HIGH);
+		delay(500);// keep in relay 3 On for 3 seconds
+		digitalWrite(driverDoorLatchPin, LOW);
+		delay(500);// keep in relay 3 On for 3 seconds
+	}
+}
 
+void driverRaiseWindow() {
+
+}
+
+void driverLockDoor() {
+  digitalWrite(driverDoorLockPin, LOW);
 }
 
 void passengerDropWindow() {
@@ -416,4 +432,18 @@ void bootButtonTest() {
       bootOpenLastButtonState = !(bootOpenLastButtonState);
       Serial.println("Boot open button: " + bootOpenLastButtonState);
     }
+}
+
+void driverDoorOpenTest() {
+	driverUnlockDoor();
+	driverDropWindow();
+	driverUnlatchDoor();
+  delay(2000);
+  driverLockDoor();
+  delay(10000);
+}
+
+void driverDoorCloseTest() {
+	driverRaiseWindow();
+	driverLockDoor();
 }
