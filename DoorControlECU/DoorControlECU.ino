@@ -271,8 +271,10 @@ void readDriverDoorButtons() {
 		if (driverInternalButtonChanged) {
 			driverInternalDoorButtonState = !(driverInternalDoorButtonState);
 		}
-
-		if (driverExternalButtonChanged || driverInternalButtonChanged) {
+   
+    //Check for button status change and if a newly pressed state then action
+    if ((driverExternalButtonChanged && (driverExternalDoorButtonState == true)) || 
+       ((driverInternalButtonChanged && (driverInternalDoorButtonState == true)) {
 			driverOpeningDoor = true;
 			turnOnLights();
 			driverDropWindow();
@@ -310,7 +312,9 @@ void readPassengerDoorButtons() {
 			passengerInternalDoorButtonState = !(passengerInternalDoorButtonState);
 		}
 
-		if (passengerExternalButtonChanged || passengerInternalButtonChanged) {
+    //Check for button status change and if a newly pressed state then action
+		if ((passengerExternalButtonChanged && (passengerExternalDoorButtonState == true)) || 
+		   ((passengerInternalButtonChanged && (passengerInternalDoorButtonState == true)) {
 			passengerOpeningDoor = true;
 			turnOnLights();
 			passengerDropWindow();
